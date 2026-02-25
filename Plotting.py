@@ -47,3 +47,23 @@ sns.heatmap(diff_matrix, annot=True, cmap="coolwarm", fmt=".2f")
 plt.title("Average Expression Differences Between Proteins")
 plt.savefig("heatmap.png")
 plt.show()
+
+
+
+
+# اختيار مجموعة بروتينات للتحليل
+proteins = ["DYRK1A_N", "CDK5_N", "NR1_N", "NR2A_N", "BDNF_N"]
+
+# فلترة البيانات
+subset = protein_data[proteins].dropna()
+
+# حساب مصفوفة الارتباط
+corr_matrix = subset.corr()
+
+# رسم Heatmap للارتباطات
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f")
+plt.title("Correlation Heatmap of Protein Expressions")
+plt.savefig("correlation_heatmap.png")  # حفظ الصورة في فولدر النتائج
+plt.show()
+
