@@ -67,3 +67,24 @@ plt.title("Correlation Heatmap of Protein Expressions")
 plt.savefig("correlation_heatmap.png")  # حفظ الصورة في فولدر النتائج
 plt.show()
 
+
+
+
+
+# اختيار بروتين معين للمقارنة
+protein = "BDNF_N"
+
+# رسم Boxplot لمقارنة التعبير حسب الـ Genotype
+plt.figure(figsize=(8, 6))
+sns.boxplot(x="Genotype", y=protein, data=protein_data)
+plt.title(f"Expression of {protein} by Genotype")
+plt.savefig("group_comparison_genotype.png")
+plt.show()
+
+# رسم Boxplot لمقارنة التعبير حسب الـ Treatment
+plt.figure(figsize=(8, 6))
+sns.boxplot(x="Treatment", y=protein, data=protein_data)
+plt.title(f"Expression of {protein} by Treatment")
+plt.savefig("group_comparison_treatment.png")
+plt.show()
+
