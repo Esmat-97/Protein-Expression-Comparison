@@ -88,3 +88,44 @@ plt.title(f"Expression of {protein} by Treatment")
 plt.savefig("group_comparison_treatment.png")
 plt.show()
 
+
+
+
+from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+
+# اختيار مجموعة بروتينات للتحليل
+proteins = ["DYRK1A_N", "CDK5_N", "NR1_N", "NR2A_N", "BDNF_N"]
+
+# فلترة البيانات
+subset = protein_data[proteins].dropna()
+
+# توحيد القيم (Scaling)
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(subset)
+
+# --- PCA ---
+pca = PCA(n_components=2)
+pca_result = pca.fit_transform(scaled_data)
+
+plt.figure(figsize=(8, 6))
+plt.scatter(pca_result[:, 0], pca_result[:, 1], alpha=0.7)
+plt.xlabel("PCA Component 1")
+plt.ylabel("PCA Component 2")
+plt.title("PCA Projection of Protein Expression")
+plt.savefig("pca_projection.png")
+plt.show()
+
+# --- Clustering باستخدام K-means ---
+kmeans = KMeans(n_clusters=3, random_state=42)
+clusters = kmeans.fit_predict(scaled_data)
+
+plt.figure(figsize=(8, 6))
+plt.scatter(pca_result[:, 0], pca_result[:, 1], c=clusters, cmap="viridis", alpha=0.7)
+plt.xlabel("PCA Component 1")
+plt.ylabel("PCA Component 2")
+plt.title("K-means Clustering on PCA Projection")
+plt.savefig("pca_kmeans.png")
+plt.show()
